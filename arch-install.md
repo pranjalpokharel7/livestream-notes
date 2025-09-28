@@ -98,8 +98,51 @@ qemu-system-x86_64 -m 4G -cdrom archlinux-2025.06.01-x86_64.iso -boot d -drive f
 configuring grub
 **note:** *you need to be inside the chroot when running `grub-install`*
 
-```
+```bash
 $ pacman -Syu grub efibootmgr
+
+# do I need to mount first?
 $ grub-install --target=x86_64-efi --efi-directory=boot --bootloader-id=GRUB
+
+# this command hasn't been run in the final_steps.img
 $ grub-mkconfig -o /boot/grub/grub.cfg
+
+# prefer to restart from arch_state_package_install if installing kernel from pacstrap doesn't work
 ```
+
+
+# day 4
+
+to update mirrorlist for slow downloads, edit the following file manually -
+```
+`/etc/pacman.d/mirrorlist`
+```
+
+notes on network manager 
+```
+pacman -S networkmanager
+systemctl enable NetworkManager.service
+```
+
+**stream idea:** hardening my linux
+
+additional configuration post installation
+- create new user
+```
+usermod -m luxray
+passwd luxray
+```
+
+- configure sudo: add entry of user `luxray` to sudoers group
+```
+[root]$ pacman -S vi
+[root]$ visudo
+
+// simply copy the root entry and replace with username
+```
+
+- install xorg + xfce4
+```
+forgot the command but they are pretty straightforward
+```
+
